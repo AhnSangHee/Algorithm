@@ -10,9 +10,9 @@
 using namespace std;
 
 int main() {
-    cin.tie(0);
-    cout.tie(0);
-    std::ios::sync_with_stdio(false);
-    
-    return 0;
+  cin.tie(0);
+  cout.tie(0);
+  std::ios::sync_with_stdio(false);
+  
+  return 0;
 }

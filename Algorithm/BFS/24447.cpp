@@ -18,55 +18,55 @@ long long int answer[100001];
 long long int answer2[100001];
 
 int main() {
-    cin.tie(0);
-    cout.tie(0);
-    std::ios::sync_with_stdio(false);
+  cin.tie(0);
+  cout.tie(0);
+  std::ios::sync_with_stdio(false);
+  
+  cin >> N >> M >> R;
+  
+  vector<int> matrix[N + 1];
+  
+  while (M--) {
+    int u, v;
+    cin >> u >> v;
     
-    cin >> N >> M >> R;
+    matrix[u].push_back(v);
+    matrix[v].push_back(u);
+  }
+  
+  for (int i = 1; i < matrix[i].size(); i++) {
+    sort(matrix[i].begin(), matrix[i].end());
+  }
+  
+  queue<int> q;
+  q.push(R);
+  
+  int depthCount = 1;
+  answer[R] = 0;
+  answer2[R] = depthCount++;
+  visited[R] = true;
+  
+  while (!q.empty()) {
+    int x = q.front();
+    q.pop();
     
-    vector<int> matrix[N + 1];
-    
-    while (M--) {
-        int u, v;
-        cin >> u >> v;
-        
-        matrix[u].push_back(v);
-        matrix[v].push_back(u);
+    for (int i = 0; i < matrix[x].size(); i++) {
+      int nx = matrix[x][i];
+      
+      if (visited[nx] || nx == 0) continue;
+      
+      q.push(nx);
+      answer[nx] = answer[x] + 1;
+      answer2[nx] = depthCount++;
+      visited[nx] = true;
     }
-    
-    for (int i = 1; i < matrix[i].size(); i++) {
-        sort(matrix[i].begin(), matrix[i].end());
-    }
-    
-    queue<int> q;
-    q.push(R);
-    
-    int depthCount = 1;
-    answer[R] = 0;
-    answer2[R] = depthCount++;
-    visited[R] = true;
-    
-    while (!q.empty()) {
-        int x = q.front();
-        q.pop();
-        
-        for (int i = 0; i < matrix[x].size(); i++) {
-            int nx = matrix[x][i];
-            
-            if (visited[nx] || nx == 0) continue;
-            
-            q.push(nx);
-            answer[nx] = answer[x] + 1;
-            answer2[nx] = depthCount++;
-            visited[nx] = true;
-        }
-    }
-    
-    long long int sum = 0;
-    for (int i = 1; i <= N; i++) {
-        sum += (answer[i] * answer2[i]);
-    }
-    
-    cout << sum << '\n';
-    return 0;
+  }
+  
+  long long int sum = 0;
+  for (int i = 1; i <= N; i++) {
+    sum += ((long long int)answer[i] * (long long int)answer2[i]);
+  }
+  
+  cout << sum << '\n';
+  return 0;
 }
